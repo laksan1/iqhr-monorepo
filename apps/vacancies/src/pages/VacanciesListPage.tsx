@@ -70,7 +70,7 @@ export function VacanciesListPage() {
     <div className={styles.page}>
       <PageHeader
         eyebrow="Вакансии"
-        title="Открытые позиции"
+        title="Открытые позиции 222"
         subtitle="Управление вакансиями, бюджетами и статусами публикации. Данные vacancy-service (mock)."
         actions={<Button type="default">+ Новая вакансия</Button>}
       />

@@ -12,7 +12,7 @@
 
 ## Установка
 
-Требуется Node.js 20+ и [pnpm](https://pnpm.io/).
+Требуется Node.js 22+ и [pnpm](https://pnpm.io/).
 
 ```bash
 pnpm install

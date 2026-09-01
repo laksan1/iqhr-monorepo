@@ -13,10 +13,11 @@ env:
   FORCE_NODE_GENERATOR: '1'
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+  NODE_VERSION: '22'
 
 jobs:
   install:
-    name: Install & Generate API
+    name: Install dependencies
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,25 +25,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - name: Setup workspace
+        uses: ./.github/actions/setup-node-pnpm
         with:
-          version: 10.10.0
+          node-version: ${{ env.NODE_VERSION }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Generate API client from Swagger mocks
-        run: pnpm generate:api:dev
-
-  lint:
-    name: Lint
+  generate-api:
+    name: Generate API (Swagger)
     needs: install
     runs-on: ubuntu-latest
     steps:
@@ -51,19 +40,28 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - name: Setup workspace
+        uses: ./.github/actions/setup-node-pnpm
         with:
-          version: 10.10.0
+          node-version: ${{ env.NODE_VERSION }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Generate API client from Swagger mocks
+        run: pnpm generate:api:dev
+
+  lint:
+    name: Lint
+    needs: generate-api
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          node-version: 20
-          cache: pnpm
+          fetch-depth: 0
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup workspace
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Generate API client from Swagger mocks
         run: pnpm generate:api:dev
@@ -73,7 +71,7 @@ jobs:
 
   typecheck:
     name: Typecheck
-    needs: install
+    needs: generate-api
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -81,19 +79,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - name: Setup workspace
+        uses: ./.github/actions/setup-node-pnpm
         with:
-          version: 10.10.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Generate API client from Swagger mocks
         run: pnpm generate:api:dev
@@ -103,7 +92,7 @@ jobs:
 
   test:
     name: Test
-    needs: install
+    needs: generate-api
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -111,19 +100,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - name: Setup workspace
+        uses: ./.github/actions/setup-node-pnpm
         with:
-          version: 10.10.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Generate API client from Swagger mocks
         run: pnpm generate:api:dev
@@ -141,19 +121,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - name: Setup workspace
+        uses: ./.github/actions/setup-node-pnpm
         with:
-          version: 10.10.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Generate API client from Swagger mocks
         run: pnpm generate:api:dev
