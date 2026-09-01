@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'ui-kit';
-import { AuthProvider } from '../auth';
+import { AuthProvider } from '../services/auth';
 import LoginPage from './Login';
 
 describe('LoginPage', () => {
@@ -18,5 +18,6 @@ describe('LoginPage', () => {
 
     expect(screen.getByRole('heading', { name: 'Вход в платформу' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Войти' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Демо-вход/ })).toBeInTheDocument();
   });
 });

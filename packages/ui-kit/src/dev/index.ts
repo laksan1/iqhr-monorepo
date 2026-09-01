@@ -1,0 +1,1 @@
+export { mountModuleApp } from './mountModuleApp';

@@ -40,7 +40,7 @@ pnpm dev
 
 Приложение: [http://localhost:5173](http://localhost:5173)
 
-Демо-логин: любой логин и пароль от 4 символов, например `admin` / `admin`.
+Демо-вход: кнопка на `/login` подставляет `admin` / `iqhr-demo-local` (мок принимает любой пароль от 4 символов).
 
 Запуск всех пакетов параллельно:
 
@@ -58,6 +58,36 @@ pnpm update-ui-kit --version=1.0.1
 
 Turborepo по `dependsOn: ["^build"]` пересобирает потребителей при изменении `ui-kit`.
 
+## CI (GitHub Actions)
+
+Пайплайн `.github/workflows/ci.yml` выполняет шаги по порядку:
+
+1. `pnpm install --frozen-lockfile`
+2. `pnpm generate:api:dev` — генерация Swagger → `packages/api-client/src/generated`
+3. `pnpm typecheck:affected` — проверка типов
+4. `pnpm lint:ci` — Biome без авто-правок
+5. `pnpm build:affected` — сборка
+
+Локально то же самое:
+
+```bash
+pnpm ci:affected   # только затронутые пакеты
+pnpm ci            # полный прогон
+```
+
+### Как работает `--affected`
+
+Turborepo сравнивает текущую ветку с базой (в PR — с `main`) и запускает задачи **только в изменённых пакетах и их зависимых**.
+
+| Что изменили | Что пересоберётся |
+| --- | --- |
+| `apps/vacancies` | `vacancies` (+ `api-client`/`ui-kit` если они в графе зависимостей и тоже затронуты) |
+| `packages/ui-kit` | `ui-kit` → затем **все приложения**, которые от него зависят (`shell`, `candidates`, `vacancies`, `personal-account`) |
+| `mocks/*.json` | `api-client` (generate) → все потребители `api-client` |
+| `packages/configs` | пакеты, которые от него зависят |
+
+Ключ — `dependsOn: ["^build"]` и `dependsOn: ["^typecheck"]` в `turbo.json`: символ `^` означает «сначала собери/проверь зависимости workspace».
+
 ## Генерация API-клиента
 
 Спецификации лежат в `mocks/`. Конфиг генераторов — `packages/configs/openapitools-axios.json`.
@@ -74,7 +104,9 @@ pnpm generate:api:dev --app=candidates
 
 Допустимые значения `--app`: `candidates`, `vacancies`, `shell`, `personal-account`.
 
-Генерация кешируется Turborepo (`inputs`: swagger-файлы, `outputs`: `src/generated/**`) и выполняется только при изменении спеков. Если в окружении нет Java, используется встроенный Node-генератор с тем же конфигом.
+Генерация кешируется Turborepo (`inputs`: swagger-файлы, `outputs`: `src/generated/**`) и выполняется только при изменении спеков.
+
+**Рабочая ли генерация?** Да. В CI и локально используется Node-генератор (`FORCE_NODE_GENERATOR=1`), который читает `mocks/*.json` и пишет TypeScript Axios-клиент. Если установлена Java, можно использовать `openapi-generator-cli` — при ошибке скрипт автоматически откатывается на Node-генератор.
 
 ## Тесты
 
@@ -125,3 +157,21 @@ mocks/                  # фиктивные OpenAPI-спеки
 | `VITE_APP_TITLE` | Название в шапке |
 | `VITE_API_BASE_URL` | Базовый URL бэкенда |
 | `VITE_USE_MOCKS` | `true` — ответы из in-memory моков |
+
+## Алиасы импортов
+
+| Алиас | Назначение |
+| --- | --- |
+| `ui-kit` | общий UI Kit |
+| `api-client` | API-клиент и HTTP-утилиты |
+| `api-client/types` | типы и модели из Swagger (`src/generated`) |
+| `candidates/*`, `vacancies/*`, `personal-account/*` | исходники модулей для lazy-load |
+| `@configs/*` | TypeScript-пути к файлам конфигов |
+
+Пример:
+
+```ts
+import { CandidatesApi } from 'api-client';
+import type { Candidate, CandidateStatus } from 'api-client/types';
+import { Button, PageHeader } from 'ui-kit';
+```

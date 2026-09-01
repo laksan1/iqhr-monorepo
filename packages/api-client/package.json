@@ -10,11 +10,16 @@
     ".": {
       "types": "./src/index.ts",
       "import": "./src/index.ts"
+    },
+    "./types": {
+      "types": "./src/generated/index.ts",
+      "import": "./src/generated/index.ts"
     }
   },
   "scripts": {
     "generate": "node ../../scripts/generate-api.mjs",
     "build": "vite build",
+    "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "lint": "biome check --write ."
   },

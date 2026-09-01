@@ -2,7 +2,16 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Form } from 'antd';
 import { CandidatesApi, UsersApi, VacanciesApi } from 'api-client';
 import { Link } from 'react-router-dom';
-import { Button, Card, Input, Spinner } from 'ui-kit';
+import {
+  Button,
+  Card,
+  EntityAvatar,
+  Input,
+  PageHeader,
+  Spinner,
+  StatCard,
+  StatusTag,
+} from 'ui-kit';
 import styles from './account.module.css';
 
 const usersApi = new UsersApi();
@@ -23,13 +32,13 @@ export function ProfilePage() {
 
   const candidatesQuery = useQuery({
     queryKey: ['account-candidates'],
-    queryFn: async () => (await candidatesApi.listCandidates({ page: 1, size: 3 })).data,
+    queryFn: async () => (await candidatesApi.listCandidates({ page: 1, size: 4 })).data,
   });
 
   const vacanciesQuery = useQuery({
     queryKey: ['account-vacancies'],
     queryFn: async () =>
-      (await vacanciesApi.listVacancies({ page: 1, size: 3, status: 'open' })).data,
+      (await vacanciesApi.listVacancies({ page: 1, size: 4, status: 'open' })).data,
   });
 
   const mutation = useMutation({
@@ -39,23 +48,49 @@ export function ProfilePage() {
 
   if (profileQuery.isLoading) return <Spinner />;
 
+  const profile = profileQuery.data;
+
   return (
     <div className={styles.page}>
-      <div className={styles.hero}>
-        <div>
-          <p className={styles.eyebrow}>Личный кабинет</p>
-          <h1>Профиль</h1>
-        </div>
-        <Link to="settings">
-          <Button type="default">Настройки</Button>
-        </Link>
+      <PageHeader
+        eyebrow="Личный кабинет"
+        title="Профиль HR-менеджера"
+        subtitle="Данные из shell-service, кандидаты и вакансии — из связанных сервисов."
+        actions={
+          <Link to="settings">
+            <Button type="default">Настройки</Button>
+          </Link>
+        }
+      />
+
+      <div className={styles.stats}>
+        <StatCard
+          label="Кандидаты в работе"
+          value={candidatesQuery.data?.items.filter((c) => c.status === 'in_progress').length ?? 0}
+          tone="warning"
+        />
+        <StatCard
+          label="Открытые вакансии"
+          value={vacanciesQuery.data?.items.length ?? 0}
+          tone="success"
+        />
+        <StatCard label="Отдел" value={profile?.department ?? '—'} />
+        <StatCard label="Город" value={profile?.city ?? '—'} />
       </div>
+
       <div className={styles.columns}>
-        <Card title="Личные данные">
+        <Card title="Личные данные" className={styles.profileCard}>
+          <div className={styles.profileHead}>
+            <EntityAvatar name={profile?.displayName ?? 'HR'} size="lg" />
+            <div>
+              <h2 className={styles.profileName}>{profile?.displayName}</h2>
+              <p className={styles.profileRole}>{profile?.position}</p>
+            </div>
+          </div>
           <Form
             form={form}
             layout="vertical"
-            initialValues={profileQuery.data}
+            initialValues={profile}
             onFinish={(values) => mutation.mutate(values)}
           >
             <Form.Item name="displayName" label="Имя" rules={[{ required: true }]}>
@@ -74,26 +109,49 @@ export function ProfilePage() {
               <Input />
             </Form.Item>
             <Button htmlType="submit" loading={mutation.isPending}>
-              Сохранить
+              Сохранить изменения
             </Button>
           </Form>
         </Card>
+
         <div className={styles.stack}>
-          <Card title="Кандидаты рядом">
-            {candidatesQuery.data?.items.map((item) => (
-              <div key={item.id}>
-                <strong>{item.fullName}</strong>
-                <div className={styles.meta}>{item.position}</div>
-              </div>
-            ))}
+          <Card title="Кандидаты в фокусе">
+            <div className={styles.list}>
+              {candidatesQuery.data?.items.map((item) => (
+                <div key={item.id} className={styles.listItem}>
+                  <EntityAvatar name={item.fullName} size="sm" />
+                  <div>
+                    <strong>{item.fullName}</strong>
+                    <div className={styles.meta}>{item.position}</div>
+                  </div>
+                  <StatusTag
+                    label={
+                      item.status === 'in_progress'
+                        ? 'В работе'
+                        : item.status === 'new'
+                          ? 'Новый'
+                          : item.status
+                    }
+                    status={item.status}
+                  />
+                </div>
+              ))}
+            </div>
           </Card>
-          <Card title="Открытые вакансии">
-            {vacanciesQuery.data?.items.map((item) => (
-              <div key={item.id}>
-                <strong>{item.title}</strong>
-                <div className={styles.meta}>{item.department}</div>
-              </div>
-            ))}
+          <Card title="Горящие вакансии">
+            <div className={styles.list}>
+              {vacanciesQuery.data?.items.map((item) => (
+                <div key={item.id} className={styles.listItem}>
+                  <div>
+                    <strong>{item.title}</strong>
+                    <div className={styles.meta}>
+                      {item.department} · {item.openings} ставок
+                    </div>
+                  </div>
+                  <StatusTag label="Открыта" status="open" />
+                </div>
+              ))}
+            </div>
           </Card>
         </div>
       </div>

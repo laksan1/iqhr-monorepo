@@ -12,7 +12,11 @@
       "import": "./src/index.ts",
       "require": "./dist/index.cjs"
     },
-    "./styles": "./src/styles/tokens.css"
+    "./styles": "./src/styles/tokens.css",
+    "./dev": {
+      "types": "./src/dev/index.ts",
+      "import": "./src/dev/index.ts"
+    }
   },
   "files": [
     "dist",
@@ -21,6 +25,7 @@
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build",
+    "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "biome check --write ."
@@ -29,12 +34,14 @@
     "antd": "^6.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^6.30.0"
+    "react-router-dom": "^6.30.0",
+    "@tanstack/react-query": "^5.85.0"
   },
   "dependencies": {
     "@ant-design/icons": "^6.1.0"
   },
   "devDependencies": {
+    "@tanstack/react-query": "^5.85.5",
     "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",

@@ -1,11 +1,11 @@
-import { AuthApi, setAuthToken, type User } from 'api-client';
-import { createContext, type ReactNode, useContext, useMemo, useState } from 'react';
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { AuthApi, setAuthToken } from 'api-client';
+import type { User } from 'api-client/types';
+import { createContext, type ReactNode, useMemo, useState } from 'react';
+import { STORAGE_KEYS } from '../../constants/storage';
 
-const USER_KEY = 'iqhr-user';
 const authApi = new AuthApi();
 
-type AuthContextValue = {
+export type AuthContextValue = {
   user: User | null;
   token: string | null;
   isAuthenticated: boolean;
@@ -14,19 +14,22 @@ type AuthContextValue = {
   hasPrivilege: (privilege: string) => boolean;
 };
 
-const AuthContext = createContext<AuthContextValue | null>(null);
+export const AuthContext = createContext<AuthContextValue | null>(null);
 
 function readUser(): User | null {
   if (typeof localStorage === 'undefined') return null;
-  const raw = localStorage.getItem(USER_KEY);
+  const raw = localStorage.getItem(STORAGE_KEYS.user);
   return raw ? (JSON.parse(raw) as User) : null;
+}
+
+function readToken(): string | null {
+  if (typeof localStorage === 'undefined') return null;
+  return localStorage.getItem(STORAGE_KEYS.token);
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(readUser);
-  const [token, setToken] = useState<string | null>(
-    typeof localStorage === 'undefined' ? null : localStorage.getItem('iqhr-token'),
-  );
+  const [token, setToken] = useState<string | null>(readToken);
 
   const value = useMemo<AuthContextValue>(
     () => ({
@@ -38,7 +41,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       login: async (username, password) => {
         const { data } = await authApi.login({ username, password });
         setAuthToken(data.token);
-        localStorage.setItem(USER_KEY, JSON.stringify(data.user));
+        localStorage.setItem(STORAGE_KEYS.user, JSON.stringify(data.user));
+        localStorage.setItem(STORAGE_KEYS.token, data.token);
         setToken(data.token);
         setUser(data.user);
       },
@@ -47,7 +51,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           await authApi.logout();
         } finally {
           setAuthToken(null);
-          localStorage.removeItem(USER_KEY);
+          localStorage.removeItem(STORAGE_KEYS.user);
+          localStorage.removeItem(STORAGE_KEYS.token);
           setToken(null);
           setUser(null);
         }
@@ -57,23 +62,4 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
-  }
-  return context;
-}
-
-export function RequireAuth() {
-  const { isAuthenticated } = useAuth();
-  const location = useLocation();
-
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace state={{ from: location }} />;
-  }
-
-  return <Outlet />;
 }

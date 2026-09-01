@@ -8,7 +8,9 @@ export const monorepoRoot = resolve(configsDir, '../..');
 
 export const workspaceAliases = {
   'ui-kit': resolve(monorepoRoot, 'packages/ui-kit/src/index.ts'),
+  'ui-kit/dev': resolve(monorepoRoot, 'packages/ui-kit/src/dev/index.ts'),
   'api-client': resolve(monorepoRoot, 'packages/api-client/src/index.ts'),
+  'api-client/types': resolve(monorepoRoot, 'packages/api-client/src/generated/index.ts'),
   'candidates/App': resolve(monorepoRoot, 'apps/candidates/src/App.tsx'),
   'vacancies/App': resolve(monorepoRoot, 'apps/vacancies/src/App.tsx'),
   'personal-account/App': resolve(monorepoRoot, 'apps/personal-account/src/App.tsx'),

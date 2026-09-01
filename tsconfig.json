@@ -4,7 +4,14 @@
     "baseUrl": ".",
     "paths": {
       "ui-kit": ["packages/ui-kit/src/index.ts"],
-      "api-client": ["packages/api-client/src/index.ts"]
+      "ui-kit/dev": ["packages/ui-kit/src/dev/index.ts"],
+      "api-client": ["packages/api-client/src/index.ts"],
+      "api-client/types": ["packages/api-client/src/generated/index.ts"],
+      "candidates/*": ["apps/candidates/src/*"],
+      "vacancies/*": ["apps/vacancies/src/*"],
+      "personal-account/*": ["apps/personal-account/src/*"],
+      "@configs/*": ["packages/configs/*"],
+      "configs/vite": ["packages/configs/vite.config.base.ts"]
     }
   }
 }

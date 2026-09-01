@@ -1,39 +1,148 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
-.hero {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 16px;
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
 }
 
-.hero h1,
-.page h1 {
-  margin: 0;
-}
-
-.eyebrow {
-  margin: 0 0 6px;
-  color: var(--color-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 12px;
+.filters {
+  padding: 4px 0;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 16px;
 }
 
-.card h3 {
-  margin: 12px 0 4px;
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 220px;
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.cardTop {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.cardHead h3 {
+  margin: 8px 0 4px;
+  font-size: 18px;
+}
+
+.role {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 14px;
 }
 
 .meta {
+  margin: 0;
   color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.skill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: var(--color-primary-hover);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-border);
+}
+
+.updated {
+  color: var(--color-text-secondary);
+  font-size: 12px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+.detailHero {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.detailHero h1 {
+  margin: 10px 0 6px;
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 16px;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.timelineItem {
+  padding-left: 14px;
+  border-left: 2px solid var(--color-primary);
+}
+
+.timelineItem strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.timelineItem span {
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
+@media (max-width: 1100px) {
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .detailGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
 }

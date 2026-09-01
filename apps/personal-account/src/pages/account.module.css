@@ -1,7 +1,13 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
 }
 
 .hero {
@@ -24,7 +30,7 @@
 
 .columns {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: 1.15fr 0.85fr;
   gap: 16px;
 }
 
@@ -34,16 +40,63 @@
   gap: 16px;
 }
 
-.meta {
+.profileCard h2,
+.profileName {
+  margin: 0;
+  font-size: 22px;
+}
+
+.profileHead {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.profileRole {
+  margin: 4px 0 0;
   color: var(--color-text-secondary);
 }
 
-.stack > * + * {
-  margin-top: 12px;
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-@media (max-width: 900px) {
+.listItem {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.listItem:last-child {
+  border-bottom: 0;
+}
+
+.meta {
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
+@media (max-width: 1100px) {
+  .stats,
   .columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .listItem {
     grid-template-columns: 1fr;
   }
 }

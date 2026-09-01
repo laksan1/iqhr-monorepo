@@ -1,4 +1,18 @@
-# Добавляем пути к Node.js и pnpm из Homebrew
-export PATH="$PATH:/opt/homebrew/bin"
+#!/usr/bin/env sh
 
-pnpm exec lint-staged
+# Git hooks from IDE/GUI get a minimal PATH without Homebrew, nvm, or pnpm.
+export PATH="$PATH:/opt/homebrew/bin:/usr/local/bin:$HOME/Library/pnpm"
+
+if [ -s "$HOME/.nvm/nvm.sh" ]; then
+  . "$HOME/.nvm/nvm.sh"
+fi
+
+if command -v fnm >/dev/null 2>&1; then
+  eval "$(fnm env --shell sh 2>/dev/null)"
+fi
+
+if command -v pnpm >/dev/null 2>&1; then
+  pnpm exec lint-staged
+else
+  lint-staged
+fi

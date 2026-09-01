@@ -117,9 +117,8 @@ function generateFromSpec(inputSpec, output, generatorKey) {
         args.push(`body: ${tsType(bodySchema, schemas)}`);
       }
 
-      const template = '${$1}';
       const urlExpr = pathParams.length
-        ? `\`${path.replace(/{([^}]+)}/g, template)}\``
+        ? '`' + path.replace(/\{([^}]+)\}/g, (_, name) => `\${${name}}`) + '`'
         : `'${path}'`;
 
       const axiosArgs = [urlExpr];

@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import { Descriptions, Tag } from 'antd';
+import { Descriptions } from 'antd';
 import { VacanciesApi } from 'api-client';
 import { Link, useParams } from 'react-router-dom';
-import { Button, Card, Spinner } from 'ui-kit';
+import { Button, Card, Spinner, StatusTag } from 'ui-kit';
 import styles from './vacancies.module.css';
 
 const api = new VacanciesApi();
@@ -33,13 +33,27 @@ export function VacancyDetailsPage() {
   return (
     <div className={styles.page}>
       <Link to="..">
-        <Button type="text">← К списку</Button>
+        <Button type="text">← К списку вакансий</Button>
       </Link>
       <Card>
-        <h1>{vacancy.title}</h1>
-        <Tag>{statusLabels[vacancy.status] ?? vacancy.status}</Tag>
-        <p>{vacancy.description}</p>
-        <Descriptions column={1}>
+        <div className={styles.detailHero}>
+          <StatusTag label={statusLabels[vacancy.status]} status={vacancy.status} />
+          <h1>{vacancy.title}</h1>
+          <div className={styles.detailMeta}>
+            <span className={styles.pill}>{vacancy.department}</span>
+            <span className={styles.pill}>{vacancy.city}</span>
+            <span className={styles.pill}>{vacancy.employmentType}</span>
+            <span className={styles.pill}>{vacancy.openings} ставок</span>
+          </div>
+          <p className={styles.salary}>
+            {vacancy.salaryFrom?.toLocaleString('ru-RU')} –{' '}
+            {vacancy.salaryTo?.toLocaleString('ru-RU')} ₽ gross
+          </p>
+        </div>
+        <p className={styles.excerpt} style={{ WebkitLineClamp: 'unset' }}>
+          {vacancy.description}
+        </p>
+        <Descriptions column={2} style={{ marginTop: 20 }}>
           <Descriptions.Item label="Отдел">{vacancy.department}</Descriptions.Item>
           <Descriptions.Item label="Город">{vacancy.city}</Descriptions.Item>
           <Descriptions.Item label="Занятость">{vacancy.employmentType}</Descriptions.Item>
