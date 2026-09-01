@@ -24,9 +24,10 @@ function formatSalary(from?: number, to?: number) {
 
 function formatDate(value?: string) {
   if (!value) return '—';
-  return new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'short' }).format(
-    new Date(value),
-  );
+  return new Intl.DateTimeFormat('ru-RU', {
+    day: 'numeric',
+    month: 'short',
+  }).format(new Date(value));
 }
 
 export function VacanciesListPage() {
@@ -37,7 +38,12 @@ export function VacanciesListPage() {
   const query = useQuery({
     queryKey: ['vacancies', page, search, status],
     queryFn: async () => {
-      const { data } = await api.listVacancies({ page, size: 6, search, status });
+      const { data } = await api.listVacancies({
+        page,
+        size: 6,
+        search,
+        status,
+      });
       return data;
     },
   });
@@ -70,7 +76,7 @@ export function VacanciesListPage() {
     <div className={styles.page}>
       <PageHeader
         eyebrow="Вакансии"
-        title="Открытые позиции 222"
+        title="Открытые позиции"
         subtitle="Управление вакансиями, бюджетами и статусами публикации. Данные vacancy-service (mock)."
         actions={<Button type="default">+ Новая вакансия</Button>}
       />
