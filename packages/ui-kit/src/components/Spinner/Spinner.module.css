@@ -1,0 +1,10 @@
+.wrap {
+  display: grid;
+  place-items: center;
+  min-height: 240px;
+}
+
+.placeholder {
+  min-height: 80px;
+  min-width: 80px;
+}

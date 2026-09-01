@@ -1,0 +1,10 @@
+{
+  "extends": "./packages/configs/tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "ui-kit": ["packages/ui-kit/src/index.ts"],
+      "api-client": ["packages/api-client/src/index.ts"]
+    }
+  }
+}

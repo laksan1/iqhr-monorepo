@@ -1,0 +1,4 @@
+> git -c user.useConfigOnly=true commit --quiet --allow-empty-message --file -
+.husky/pre-commit: line 1: pnpm: command not found
+husky - pre-commit script failed (code 127)
+husky - command not found in PATH=node_modules/.bin:/Library/Developer/CommandLineTools/usr/libexec/git-core:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin

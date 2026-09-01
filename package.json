@@ -1,0 +1,42 @@
+{
+  "name": "iqhr-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "IQHR modular monolith — Turborepo + pnpm + Vite",
+  "packageManager": "pnpm@10.10.0",
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "scripts": {
+    "dev": "turbo run dev --filter=shell",
+    "dev:all": "turbo run dev",
+    "build": "turbo run build",
+    "build:affected": "turbo run build --affected",
+    "test": "turbo run test",
+    "test:affected": "turbo run test --affected",
+    "lint": "biome check --write .",
+    "format": "biome format --write .",
+    "generate:api:dev": "turbo run generate --filter=api-client",
+    "update-ui-kit": "node scripts/update-ui-kit.mjs",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.0",
+    "turbo": "^2.5.0",
+    "typescript": "^5.9.2"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css}": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "@openapitools/openapi-generator-cli"
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "configs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./biome.json": "./biome.json",
+    "./tsconfig.base.json": "./tsconfig.base.json",
+    "./tsconfig.react.json": "./tsconfig.react.json",
+    "./vite": "./vite.config.base.ts",
+    "./vitest": "./vitest.config.base.ts",
+    "./openapitools-axios.json": "./openapitools-axios.json"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.2",
+    "vite": "^7.1.5",
+    "vitest": "^3.2.4"
+  }
+}

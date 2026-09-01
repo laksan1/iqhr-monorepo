@@ -1,0 +1,4 @@
+# Добавляем пути к Node.js и pnpm из Homebrew
+export PATH="$PATH:/opt/homebrew/bin"
+
+pnpm exec lint-staged

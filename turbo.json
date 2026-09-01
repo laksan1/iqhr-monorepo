@@ -1,0 +1,32 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build", "generate"],
+      "outputs": ["dist/**"],
+      "inputs": ["src/**", "index.html", "vite.config.ts", "tsconfig.json", "package.json"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": [],
+      "inputs": ["src/**", "vitest.config.ts", "vite.config.ts", "package.json"]
+    },
+    "lint": {
+      "outputs": []
+    },
+    "generate": {
+      "inputs": [
+        "../../mocks/*.json",
+        "../configs/openapitools-axios.json",
+        "../../scripts/generate-api.mjs"
+      ],
+      "outputs": ["src/generated/**"],
+      "env": ["npm_config_app", "FORCE_NODE_GENERATOR"]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "extends": ["./packages/configs/biome.json"],
+  "files": {
+    "includes": [
+      "!**/node_modules",
+      "!**/dist",
+      "!**/.turbo",
+      "!**/coverage",
+      "!**/packages/api-client/src/generated"
+    ]
+  }
+}

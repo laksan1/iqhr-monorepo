@@ -1,0 +1,171 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Shell Service",
+    "version": "1.0.0",
+    "description": "Mock API for IQHR auth, profile and settings"
+  },
+  "servers": [{ "url": "/api/shell-service" }],
+  "tags": [{ "name": "Auth" }, { "name": "Users" }],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "operationId": "login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/LoginRequest" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authenticated",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/LoginResponse" } }
+            }
+          },
+          "401": { "description": "Invalid credentials" }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "operationId": "logout",
+        "responses": { "204": { "description": "Logged out" } }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": ["Auth"],
+        "operationId": "getCurrentUser",
+        "responses": {
+          "200": {
+            "description": "Current user",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/User" } }
+            }
+          }
+        }
+      }
+    },
+    "/users/profile": {
+      "get": {
+        "tags": ["Users"],
+        "operationId": "getProfile",
+        "responses": {
+          "200": {
+            "description": "Profile",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserProfile" } }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "operationId": "updateProfile",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/UserProfile" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated profile",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserProfile" } }
+            }
+          }
+        }
+      }
+    },
+    "/users/settings": {
+      "get": {
+        "tags": ["Users"],
+        "operationId": "getSettings",
+        "responses": {
+          "200": {
+            "description": "Settings",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserSettings" } }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "operationId": "updateSettings",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/UserSettings" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated settings",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/UserSettings" } }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginRequest": {
+        "type": "object",
+        "required": ["username", "password"],
+        "properties": {
+          "username": { "type": "string" },
+          "password": { "type": "string" }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "required": ["token", "user"],
+        "properties": {
+          "token": { "type": "string" },
+          "user": { "$ref": "#/components/schemas/User" }
+        }
+      },
+      "User": {
+        "type": "object",
+        "required": ["id", "username", "displayName", "privileges"],
+        "properties": {
+          "id": { "type": "string" },
+          "username": { "type": "string" },
+          "displayName": { "type": "string" },
+          "email": { "type": "string" },
+          "avatarUrl": { "type": "string" },
+          "privileges": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "UserProfile": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "displayName": { "type": "string" },
+          "email": { "type": "string" },
+          "phone": { "type": "string" },
+          "position": { "type": "string" },
+          "department": { "type": "string" },
+          "city": { "type": "string" }
+        }
+      },
+      "UserSettings": {
+        "type": "object",
+        "properties": {
+          "language": { "type": "string" },
+          "theme": { "type": "string", "enum": ["light", "dark", "system"] },
+          "emailNotifications": { "type": "boolean" },
+          "pushNotifications": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "7.14.0",
+    "generators": {
+      "candidate": {
+        "generatorName": "typescript-axios",
+        "inputSpec": "../../mocks/candidate-service.json",
+        "output": "../api-client/src/generated/candidate",
+        "additionalProperties": {
+          "npmName": "api-client-candidate",
+          "supportsES6": true,
+          "withSeparateModelsAndApi": true,
+          "apiPackage": "api",
+          "modelPackage": "models",
+          "useSingleRequestParameter": true,
+          "withInterfaces": true
+        }
+      },
+      "vacancy": {
+        "generatorName": "typescript-axios",
+        "inputSpec": "../../mocks/vacancy-service.json",
+        "output": "../api-client/src/generated/vacancy",
+        "additionalProperties": {
+          "npmName": "api-client-vacancy",
+          "supportsES6": true,
+          "withSeparateModelsAndApi": true,
+          "apiPackage": "api",
+          "modelPackage": "models",
+          "useSingleRequestParameter": true,
+          "withInterfaces": true
+        }
+      },
+      "shell": {
+        "generatorName": "typescript-axios",
+        "inputSpec": "../../mocks/shell-service.json",
+        "output": "../api-client/src/generated/shell",
+        "additionalProperties": {
+          "npmName": "api-client-shell",
+          "supportsES6": true,
+          "withSeparateModelsAndApi": true,
+          "apiPackage": "api",
+          "modelPackage": "models",
+          "useSingleRequestParameter": true,
+          "withInterfaces": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Vacancy Service",
+    "version": "1.0.0",
+    "description": "Mock API for IQHR vacancies module"
+  },
+  "servers": [{ "url": "/api/vacancy-service" }],
+  "tags": [{ "name": "Vacancies" }],
+  "paths": {
+    "/vacancies": {
+      "get": {
+        "tags": ["Vacancies"],
+        "operationId": "listVacancies",
+        "summary": "List vacancies with filters and pagination",
+        "parameters": [
+          { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "size", "in": "query", "schema": { "type": "integer", "default": 10 } },
+          { "name": "search", "in": "query", "schema": { "type": "string" } },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": { "type": "string", "enum": ["draft", "open", "paused", "closed"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paged vacancy list",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/VacancyPage" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Vacancies"],
+        "operationId": "createVacancy",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/VacancyPayload" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Vacancy" } }
+            }
+          }
+        }
+      }
+    },
+    "/vacancies/{id}": {
+      "get": {
+        "tags": ["Vacancies"],
+        "operationId": "getVacancy",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Vacancy",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Vacancy" } }
+            }
+          },
+          "404": { "description": "Not found" }
+        }
+      },
+      "put": {
+        "tags": ["Vacancies"],
+        "operationId": "updateVacancy",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/VacancyPayload" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Vacancy" } }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "VacancyStatus": {
+        "type": "string",
+        "enum": ["draft", "open", "paused", "closed"]
+      },
+      "Vacancy": {
+        "type": "object",
+        "required": ["id", "title", "status"],
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "department": { "type": "string" },
+          "city": { "type": "string" },
+          "employmentType": { "type": "string" },
+          "salaryFrom": { "type": "number" },
+          "salaryTo": { "type": "number" },
+          "status": { "$ref": "#/components/schemas/VacancyStatus" },
+          "description": { "type": "string" },
+          "openings": { "type": "integer" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "VacancyPayload": {
+        "type": "object",
+        "required": ["title"],
+        "properties": {
+          "title": { "type": "string" },
+          "department": { "type": "string" },
+          "city": { "type": "string" },
+          "employmentType": { "type": "string" },
+          "salaryFrom": { "type": "number" },
+          "salaryTo": { "type": "number" },
+          "status": { "$ref": "#/components/schemas/VacancyStatus" },
+          "description": { "type": "string" },
+          "openings": { "type": "integer" }
+        }
+      },
+      "VacancyPage": {
+        "type": "object",
+        "required": ["items", "total", "page", "size"],
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/Vacancy" } },
+          "total": { "type": "integer" },
+          "page": { "type": "integer" },
+          "size": { "type": "integer" }
+        }
+      }
+    }
+  }
+}

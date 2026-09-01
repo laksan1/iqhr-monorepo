@@ -1,0 +1,32 @@
+{
+  "name": "api-client",
+  "version": "1.0.0",
+  "description": "Generated Axios client for IQHR services",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "generate": "node ../../scripts/generate-api.mjs",
+    "build": "vite build",
+    "test": "vitest run",
+    "lint": "biome check --write ."
+  },
+  "dependencies": {
+    "axios": "^1.11.0"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.25.0",
+    "@types/node": "^24.3.1",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.5",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^3.2.4"
+  }
+}

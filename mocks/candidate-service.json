@@ -1,0 +1,150 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Candidate Service",
+    "version": "1.0.0",
+    "description": "Mock API for IQHR candidates module"
+  },
+  "servers": [{ "url": "/api/candidates-service" }],
+  "tags": [{ "name": "Candidates" }],
+  "paths": {
+    "/candidates": {
+      "get": {
+        "tags": ["Candidates"],
+        "operationId": "listCandidates",
+        "summary": "List candidates with filters and pagination",
+        "parameters": [
+          { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "size", "in": "query", "schema": { "type": "integer", "default": 10 } },
+          { "name": "search", "in": "query", "schema": { "type": "string" } },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": { "type": "string", "enum": ["new", "in_progress", "hired", "rejected"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paged candidate list",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CandidatePage" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Candidates"],
+        "operationId": "createCandidate",
+        "summary": "Create a candidate",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CandidatePayload" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Candidate" } }
+            }
+          }
+        }
+      }
+    },
+    "/candidates/{id}": {
+      "get": {
+        "tags": ["Candidates"],
+        "operationId": "getCandidate",
+        "summary": "Get candidate by id",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Candidate",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Candidate" } }
+            }
+          },
+          "404": { "description": "Not found" }
+        }
+      },
+      "put": {
+        "tags": ["Candidates"],
+        "operationId": "updateCandidate",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CandidatePayload" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Candidate" } }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CandidateStatus": {
+        "type": "string",
+        "enum": ["new", "in_progress", "hired", "rejected"]
+      },
+      "Candidate": {
+        "type": "object",
+        "required": ["id", "fullName", "email", "status"],
+        "properties": {
+          "id": { "type": "string" },
+          "fullName": { "type": "string" },
+          "email": { "type": "string" },
+          "phone": { "type": "string" },
+          "position": { "type": "string" },
+          "city": { "type": "string" },
+          "experienceYears": { "type": "number" },
+          "status": { "$ref": "#/components/schemas/CandidateStatus" },
+          "skills": { "type": "array", "items": { "type": "string" } },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "CandidatePayload": {
+        "type": "object",
+        "required": ["fullName", "email"],
+        "properties": {
+          "fullName": { "type": "string" },
+          "email": { "type": "string" },
+          "phone": { "type": "string" },
+          "position": { "type": "string" },
+          "city": { "type": "string" },
+          "experienceYears": { "type": "number" },
+          "status": { "$ref": "#/components/schemas/CandidateStatus" },
+          "skills": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "CandidatePage": {
+        "type": "object",
+        "required": ["items", "total", "page", "size"],
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/Candidate" } },
+          "total": { "type": "integer" },
+          "page": { "type": "integer" },
+          "size": { "type": "integer" }
+        }
+      }
+    }
+  }
+}
