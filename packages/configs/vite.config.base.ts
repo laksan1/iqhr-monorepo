@@ -6,20 +6,45 @@ import { defineConfig, mergeConfig, type UserConfig } from 'vite';
 const configsDir = fileURLToPath(new URL('.', import.meta.url));
 export const monorepoRoot = resolve(configsDir, '../..');
 
-export const workspaceAliases = {
-  'ui-kit': resolve(monorepoRoot, 'packages/ui-kit/src/index.ts'),
-  'ui-kit/dev': resolve(monorepoRoot, 'packages/ui-kit/src/dev/index.ts'),
-  'api-client': resolve(monorepoRoot, 'packages/api-client/src/index.ts'),
-  'api-client/types': resolve(monorepoRoot, 'packages/api-client/src/generated/index.ts'),
-  'candidates/App': resolve(monorepoRoot, 'apps/candidates/src/App.tsx'),
-  'vacancies/App': resolve(monorepoRoot, 'apps/vacancies/src/App.tsx'),
-  'personal-account/App': resolve(monorepoRoot, 'apps/personal-account/src/App.tsx'),
-};
+const aliasEntries: Array<{ find: string | RegExp; replacement: string }> = [
+  {
+    find: 'ui-kit/dev',
+    replacement: resolve(monorepoRoot, 'packages/ui-kit/src/dev/index.ts'),
+  },
+  {
+    find: 'ui-kit',
+    replacement: resolve(monorepoRoot, 'packages/ui-kit/src/index.ts'),
+  },
+  {
+    find: 'api-client/types',
+    replacement: resolve(monorepoRoot, 'packages/api-client/src/generated/index.ts'),
+  },
+  {
+    find: 'api-client',
+    replacement: resolve(monorepoRoot, 'packages/api-client/src/index.ts'),
+  },
+  {
+    find: 'candidates/App',
+    replacement: resolve(monorepoRoot, 'apps/candidates/src/App.tsx'),
+  },
+  {
+    find: 'vacancies/App',
+    replacement: resolve(monorepoRoot, 'apps/vacancies/src/App.tsx'),
+  },
+  {
+    find: 'personal-account/App',
+    replacement: resolve(monorepoRoot, 'apps/personal-account/src/App.tsx'),
+  },
+];
+
+export const workspaceAliases = Object.fromEntries(
+  aliasEntries.map(({ find, replacement }) => [String(find), replacement]),
+);
 
 export const reactViteConfig = defineConfig({
   plugins: [react()],
   resolve: {
-    alias: workspaceAliases,
+    alias: aliasEntries,
     dedupe: ['react', 'react-dom', 'react-router-dom', 'antd'],
   },
   css: {
