@@ -20,16 +20,6 @@
   padding-inline: 12px;
 }
 
-.collapsed .brand {
-  justify-content: center;
-  padding-inline: 0;
-}
-
-.collapsed .item {
-  justify-content: center;
-  padding-inline: 0;
-}
-
 .toggle {
   position: absolute;
   top: 28px;
@@ -86,6 +76,11 @@
   transition: opacity var(--transition);
 }
 
+.collapsed .brand {
+  justify-content: center;
+  padding-inline: 0;
+}
+
 .logoMark {
   display: grid;
   place-items: center;
@@ -126,6 +121,11 @@
     background var(--transition),
     color var(--transition),
     transform var(--transition);
+}
+
+.collapsed .item {
+  justify-content: center;
+  padding-inline: 0;
 }
 
 .item:hover {

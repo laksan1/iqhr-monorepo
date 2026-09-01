@@ -118,7 +118,7 @@ function generateFromSpec(inputSpec, output, generatorKey) {
       }
 
       const urlExpr = pathParams.length
-        ? '`' + path.replace(/\{([^}]+)\}/g, (_, name) => `\${${name}}`) + '`'
+        ? `\`${path.replace(/\{([^}]+)\}/g, (_, name) => `\${${name}}`)}\``
         : `'${path}'`;
 
       const axiosArgs = [urlExpr];

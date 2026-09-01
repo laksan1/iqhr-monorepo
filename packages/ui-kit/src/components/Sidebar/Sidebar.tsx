@@ -36,7 +36,9 @@ export function Sidebar({
         aria-expanded={!collapsed}
         title={collapsed ? 'Развернуть' : 'Свернуть'}
       >
-        <LeftOutlined className={`${styles.toggleIcon} ${collapsed ? styles.toggleIconCollapsed : ''}`} />
+        <LeftOutlined
+          className={`${styles.toggleIcon} ${collapsed ? styles.toggleIconCollapsed : ''}`}
+        />
       </button>
 
       <div className={styles.brand}>
