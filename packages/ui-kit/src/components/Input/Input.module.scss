@@ -3,9 +3,9 @@
   background: var(--color-background);
   border-color: var(--color-border);
   color: var(--color-text);
-}
 
-.input:focus,
-.input:hover {
-  border-color: var(--color-primary);
+  &:focus,
+  &:hover {
+    border-color: var(--color-primary);
+  }
 }

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" role="img" aria-label="IQHR">
+  <defs>
+    <linearGradient id="iqhr-bg" x1="6" y1="4" x2="26" y2="28" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4fd4a4" />
+      <stop offset="1" stop-color="#33b789" />
+    </linearGradient>
+    <linearGradient id="iqhr-shine" x1="8" y1="6" x2="20" y2="18" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff" stop-opacity="0.35" />
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <rect width="32" height="32" rx="9" fill="url(#iqhr-bg)" />
+  <rect width="32" height="32" rx="9" fill="url(#iqhr-shine)" />
+
+  <!-- I -->
+  <rect x="8.25" y="9" width="3.2" height="14" rx="1.6" fill="#ffffff" />
+
+  <!-- Q -->
+  <circle cx="20.75" cy="15.75" r="5.35" stroke="#ffffff" stroke-width="2.65" />
+  <path
+    d="M24.35 19.35 L27.1 22.35"
+    stroke="#ffffff"
+    stroke-width="2.65"
+    stroke-linecap="round"
+  />
+</svg>

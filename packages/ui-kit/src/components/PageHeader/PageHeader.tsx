@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import styles from './PageHeader.module.css';
+import styles from './PageHeader.module.scss';
 
 export type PageHeaderProps = {
   eyebrow?: string;

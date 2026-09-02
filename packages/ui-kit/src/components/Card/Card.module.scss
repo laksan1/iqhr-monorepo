@@ -7,8 +7,8 @@
   transition:
     box-shadow var(--transition),
     transform var(--transition);
-}
 
-.card:hover {
-  box-shadow: var(--shadow-md);
+  &:hover {
+    box-shadow: var(--shadow-md);
+  }
 }

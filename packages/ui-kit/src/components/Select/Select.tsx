@@ -1,5 +1,5 @@
 import { Select as AntSelect, type SelectProps as AntSelectProps } from 'antd';
-import styles from './Select.module.css';
+import styles from './Select.module.scss';
 
 export type SelectProps = AntSelectProps;
 

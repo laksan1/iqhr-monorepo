@@ -6,7 +6,7 @@ import { DEFAULT_CABINET_PATH } from '../constants/paths';
 import { useAuth } from '../services/auth';
 import type { RedirectLocationState } from '../types/navigation';
 import { DEMO_LOGIN, DEMO_LOGIN_LABEL } from './demoLogin';
-import styles from './Login.module.css';
+import styles from './Login.module.scss';
 
 type LoginValues = {
   username: string;

@@ -13,6 +13,7 @@
       "require": "./dist/index.cjs"
     },
     "./styles": "./src/styles/tokens.css",
+    "./styles/mixins": "./src/styles/_mixins.scss",
     "./dev": {
       "types": "./src/dev/index.ts",
       "import": "./src/dev/index.ts"
@@ -53,6 +54,7 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^6.30.1",
+    "sass": "^1.83.0",
     "typescript": "^5.9.2",
     "vite": "^7.1.5",
     "vite-plugin-dts": "^4.5.4",

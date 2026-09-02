@@ -1,5 +1,5 @@
 import { Input as AntInput, type InputProps as AntInputProps } from 'antd';
-import styles from './Input.module.css';
+import styles from './Input.module.scss';
 
 export type InputProps = AntInputProps;
 

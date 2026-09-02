@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 import { useTheme } from '../../theme/ThemeContext';
 import { Button } from '../Button/Button';
 import { Sidebar, type SidebarItem } from '../Sidebar/Sidebar';
-import styles from './Layout.module.css';
+import styles from './Layout.module.scss';
 
 export type LayoutUser = {
   displayName: string;

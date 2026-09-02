@@ -1,7 +1,7 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { Button } from '../Button/Button';
 import { Card } from '../Card/Card';
-import styles from './ErrorBoundary.module.css';
+import styles from './ErrorBoundary.module.scss';
 
 type Props = {
   children: ReactNode;

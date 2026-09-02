@@ -1,0 +1,54 @@
+$breakpoint-mobile: 640px;
+$breakpoint-tablet: 768px;
+$breakpoint-login: 900px;
+$breakpoint-desktop: 1100px;
+
+@mixin mobile-down {
+  @media (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+
+@mixin tablet-down {
+  @media (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin login-down {
+  @media (max-width: $breakpoint-login) {
+    @content;
+  }
+}
+
+@mixin desktop-down {
+  @media (max-width: $breakpoint-desktop) {
+    @content;
+  }
+}
+
+@mixin flex-column($gap: 0) {
+  display: flex;
+  flex-direction: column;
+
+  @if $gap > 0 {
+    gap: $gap;
+  }
+}
+
+@mixin interactive-surface {
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition);
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@mixin pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}

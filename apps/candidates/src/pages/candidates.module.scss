@@ -1,13 +1,19 @@
 .page {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  @include flex-column(20px);
 }
 
 .stats {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
+
+  @include desktop-down {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include mobile-down {
+    grid-template-columns: 1fr;
+  }
 }
 
 .filters {
@@ -21,17 +27,13 @@
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  @include flex-column(12px);
   min-height: 220px;
-  transition:
-    transform var(--transition),
-    box-shadow var(--transition);
-}
+  @include interactive-surface;
 
-.card:hover {
-  transform: translateY(-2px);
+  &:hover {
+    transform: translateY(-2px);
+  }
 }
 
 .cardTop {
@@ -45,15 +47,14 @@
   font-size: 18px;
 }
 
-.role {
+.role,
+.meta {
   margin: 0;
   color: var(--color-text-secondary);
   font-size: 14px;
 }
 
 .meta {
-  margin: 0;
-  color: var(--color-text-secondary);
   font-size: 13px;
 }
 
@@ -64,12 +65,9 @@
 }
 
 .skill {
-  padding: 4px 10px;
-  border-radius: 999px;
+  @include pill;
   background: var(--color-accent);
   color: var(--color-primary-hover);
-  font-size: 12px;
-  font-weight: 600;
 }
 
 .cardFooter {
@@ -98,51 +96,37 @@
   gap: 20px;
   align-items: center;
   margin-bottom: 20px;
-}
 
-.detailHero h1 {
-  margin: 10px 0 6px;
+  h1 {
+    margin: 10px 0 6px;
+  }
 }
 
 .detailGrid {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
   gap: 16px;
+
+  @include desktop-down {
+    grid-template-columns: 1fr;
+  }
 }
 
 .timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  @include flex-column(12px);
 }
 
 .timelineItem {
   padding-left: 14px;
   border-left: 2px solid var(--color-primary);
-}
 
-.timelineItem strong {
-  display: block;
-  margin-bottom: 4px;
-}
-
-.timelineItem span {
-  color: var(--color-text-secondary);
-  font-size: 13px;
-}
-
-@media (max-width: 1100px) {
-  .stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  strong {
+    display: block;
+    margin-bottom: 4px;
   }
 
-  .detailGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 640px) {
-  .stats {
-    grid-template-columns: 1fr;
+  span {
+    color: var(--color-text-secondary);
+    font-size: 13px;
   }
 }

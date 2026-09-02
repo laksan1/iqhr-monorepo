@@ -3,7 +3,7 @@ import { Descriptions } from 'antd';
 import { CandidatesApi } from 'api-client';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Card, EntityAvatar, Spinner, StatusTag } from 'ui-kit';
-import styles from './candidates.module.css';
+import styles from './candidates.module.scss';
 
 const api = new CandidatesApi();
 

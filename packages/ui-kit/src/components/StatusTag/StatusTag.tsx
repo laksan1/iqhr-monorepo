@@ -1,4 +1,4 @@
-import styles from './StatusTag.module.css';
+import styles from './StatusTag.module.scss';
 
 const toneMap = {
   new: 'info',

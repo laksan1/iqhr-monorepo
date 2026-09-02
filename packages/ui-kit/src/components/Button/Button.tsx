@@ -1,6 +1,6 @@
 import { Button as AntButton, type ButtonProps as AntButtonProps } from 'antd';
 import type { ReactNode } from 'react';
-import styles from './Button.module.css';
+import styles from './Button.module.scss';
 
 export type ButtonProps = AntButtonProps & {
   children?: ReactNode;

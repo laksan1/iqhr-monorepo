@@ -3,7 +3,7 @@ import { Descriptions } from 'antd';
 import { VacanciesApi } from 'api-client';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Card, Spinner, StatusTag } from 'ui-kit';
-import styles from './vacancies.module.css';
+import styles from './vacancies.module.scss';
 
 const api = new VacanciesApi();
 

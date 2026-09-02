@@ -36,11 +36,12 @@
     "@biomejs/biome": "^2.5.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.0",
+    "sass": "^1.83.0",
     "turbo": "^2.5.0",
     "typescript": "^5.9.2"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css}": [
+    "*.{js,jsx,ts,tsx,json,scss}": [
       "biome check --write --no-errors-on-unmatched"
     ]
   },

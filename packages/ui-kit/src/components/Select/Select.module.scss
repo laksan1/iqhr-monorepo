@@ -1,0 +1,9 @@
+.select {
+  min-width: 160px;
+
+  :global(.ant-select-selector) {
+    border-radius: var(--radius-sm) !important;
+    border-color: var(--color-border) !important;
+    background: var(--color-background) !important;
+  }
+}

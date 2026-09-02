@@ -12,7 +12,7 @@ import {
   StatCard,
   StatusTag,
 } from 'ui-kit';
-import styles from './account.module.css';
+import styles from './account.module.scss';
 
 const usersApi = new UsersApi();
 const candidatesApi = new CandidatesApi();

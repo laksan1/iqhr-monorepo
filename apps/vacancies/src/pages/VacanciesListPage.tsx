@@ -5,7 +5,7 @@ import type { VacancyStatus } from 'api-client/types';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, Input, PageHeader, Select, Spinner, StatCard, StatusTag } from 'ui-kit';
-import styles from './vacancies.module.css';
+import styles from './vacancies.module.scss';
 
 const api = new VacanciesApi();
 

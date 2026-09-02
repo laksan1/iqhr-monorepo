@@ -4,8 +4,8 @@
   transition:
     transform var(--transition),
     box-shadow var(--transition);
-}
 
-.button:not(:disabled):hover {
-  transform: translateY(-1px);
+  &:not(:disabled):hover {
+    transform: translateY(-1px);
+  }
 }

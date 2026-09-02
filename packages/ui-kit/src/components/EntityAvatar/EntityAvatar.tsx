@@ -1,4 +1,4 @@
-import styles from './EntityAvatar.module.css';
+import styles from './EntityAvatar.module.scss';
 
 function initials(name: string) {
   return name

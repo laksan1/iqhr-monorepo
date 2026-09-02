@@ -51,6 +51,11 @@ export const reactViteConfig = defineConfig({
     modules: {
       localsConvention: 'camelCaseOnly',
     },
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "${resolve(monorepoRoot, 'packages/ui-kit/src/styles/mixins')}" as *;\n`,
+      },
+    },
   },
   server: {
     fs: {

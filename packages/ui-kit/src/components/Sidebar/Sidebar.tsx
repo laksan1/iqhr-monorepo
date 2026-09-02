@@ -1,7 +1,7 @@
 import { LeftOutlined } from '@ant-design/icons';
 import type { ReactNode } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import styles from './Sidebar.module.css';
+import styles from './Sidebar.module.scss';
 
 export type SidebarItem = {
   key: string;

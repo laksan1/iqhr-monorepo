@@ -4,7 +4,7 @@
 
 ## Стек
 
-- React 19, React Router v6, Ant Design, CSS Modules
+- React 19, React Router v6, Ant Design, SCSS Modules
 - `@tanstack/react-query` для API
 - Biome (линтер, форматтер, сортировка импортов)
 - Vitest + React Testing Library

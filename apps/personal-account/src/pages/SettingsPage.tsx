@@ -3,7 +3,7 @@ import { Form, Switch } from 'antd';
 import { UsersApi } from 'api-client';
 import { Link } from 'react-router-dom';
 import { Button, Card, Select, Spinner } from 'ui-kit';
-import styles from './account.module.css';
+import styles from './account.module.scss';
 
 const usersApi = new UsersApi();
 

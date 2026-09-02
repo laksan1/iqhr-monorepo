@@ -1,23 +1,29 @@
 .page {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  @include flex-column(20px);
 }
 
 .stats {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
+
+  @include desktop-down {
+    grid-template-columns: 1fr;
+  }
+
+  @include mobile-down {
+    grid-template-columns: 1fr;
+  }
 }
 
 .hero {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-}
 
-.hero h1 {
-  margin: 0;
+  h1 {
+    margin: 0;
+  }
 }
 
 .eyebrow {
@@ -32,12 +38,14 @@
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   gap: 16px;
+
+  @include desktop-down {
+    grid-template-columns: 1fr;
+  }
 }
 
 .stack {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  @include flex-column(16px);
 }
 
 .profileCard h2,
@@ -61,9 +69,7 @@
 }
 
 .list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  @include flex-column(12px);
 }
 
 .listItem {
@@ -73,30 +79,17 @@
   align-items: center;
   padding: 10px 0;
   border-bottom: 1px solid var(--color-border);
-}
 
-.listItem:last-child {
-  border-bottom: 0;
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  @include mobile-down {
+    grid-template-columns: 1fr;
+  }
 }
 
 .meta {
   color: var(--color-text-secondary);
   font-size: 13px;
-}
-
-@media (max-width: 1100px) {
-  .stats,
-  .columns {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 640px) {
-  .stats {
-    grid-template-columns: 1fr;
-  }
-
-  .listItem {
-    grid-template-columns: 1fr;
-  }
 }
